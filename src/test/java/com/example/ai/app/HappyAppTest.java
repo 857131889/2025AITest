@@ -29,4 +29,13 @@ class HappyAppTest {
         response = happyApp.chat(message,chatId);
         Assertions.assertNotNull(response);
     }
+
+    @Test
+    void testChatReport(){
+        String chatId = UUID.randomUUID().toString();
+        String message = "你好,我是人类";
+        HappyApp.ActorsFilms actorsFilms = happyApp.chatReport(message,chatId);
+        System.out.println(actorsFilms);
+        Assertions.assertNotNull(actorsFilms);
+    }
 }

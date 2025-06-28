@@ -10,6 +10,8 @@ import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY;
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY;
 
@@ -42,4 +44,18 @@ public class HappyApp {
         log.info("context:{}",content);
         return content;
     }
+    record ActorsFilms(String actor, List<String> movies) {
+    }
+    public ActorsFilms chatReport(String message,String chatId) {
+        ActorsFilms actorsFilms = chatClient.prompt()
+                .system("扮演专家：")
+                .user(message)
+                .advisors(spec -> spec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
+                        .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
+                .call()
+                .entity(ActorsFilms.class);
+        log.info("ActorsFilm:{}",actorsFilms);
+        return actorsFilms;
+    }
 }
+
