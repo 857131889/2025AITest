@@ -1,5 +1,6 @@
 package com.example.ai.app;
 
+import com.example.ai.chatmemory.FileBasedChatMemory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
@@ -22,7 +23,9 @@ public class HappyApp {
     private final ChatClient chatClient;
 
     public HappyApp(ChatModel dashScopeChatModel) {
-        ChatMemory chatMemory = new InMemoryChatMemory();
+        String filedir = System.getProperty("user.dir") + "/tmp/chat_memory";
+        ChatMemory chatMemory = new FileBasedChatMemory(filedir);
+        // ChatMemory chatMemory = new InMemoryChatMemory();
         chatClient = ChatClient.builder(dashScopeChatModel).defaultSystem(SYSTEM_PROMPT)
                 .defaultAdvisors(
                         new MessageChatMemoryAdvisor(chatMemory),
