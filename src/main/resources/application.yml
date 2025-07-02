@@ -4,6 +4,12 @@ spring:
   ai:
     dashscope:
       api-key: ${DASHSCOPE_API_KEY}
+    vectorstore:
+      pgvector:
+      index-type: HNSW
+      distance-type: COSINE_DISTANCE
+      dimensions: 1536
+      max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
 
     ollama:
       base-url: http://localhost:11434
@@ -11,6 +17,11 @@ spring:
         model: deepseek-r1
   main:
     allow-bean-definition-overriding : true
+
+  datasource:
+    url: jdbc:postgresql://pgm-bp11r1xvzuv4mg41yo.rwlb.rds.aliyuncs.com:5432/AITest
+    username: Rigel
+    password: ACE-+abc1
 
 server:
   port: 8123
