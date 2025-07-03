@@ -1,6 +1,8 @@
 package com.example.ai.config;
 
 import com.example.ai.rag.HappyAppDocumentLoader;
+import com.example.ai.rag.MyKeywordEnricher;
+import com.example.ai.rag.MyTokenTextSpliter;
 import jakarta.annotation.Resource;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;
@@ -18,6 +20,13 @@ public class HappyAppVectorStoreConfig {
 
     @Resource
     HappyAppDocumentLoader happyAppDocumentLoader;
+
+    @Resource
+    MyTokenTextSpliter myTokenTextSplitter;
+
+    @Resource
+    MyKeywordEnricher myKeywordEnricher;
+
     @Primary
     @Bean
     VectorStore happyAppVectors(@Qualifier("dashscopeEmbeddingModel") EmbeddingModel embeddingModel) {
@@ -26,7 +35,11 @@ public class HappyAppVectorStoreConfig {
 
         List<Document> documents = happyAppDocumentLoader.loadMarkdownDocument();
 
-        simpleVectorStore.add(documents);
+        List<Document> splitedDocuments = myTokenTextSplitter.splitCustomized(documents);
+
+        List<Document> enrichedDocuments = myKeywordEnricher.enrichDocuments(splitedDocuments);
+
+        simpleVectorStore.add(enrichedDocuments);
         return simpleVectorStore;
     }
 }

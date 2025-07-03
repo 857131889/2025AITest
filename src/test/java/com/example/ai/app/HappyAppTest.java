@@ -56,4 +56,13 @@ class HappyAppTest {
         System.out.println(response);
         Assertions.assertNotNull(response);
     }
+
+    @Test
+    void testChatWithPgVectorRag() {
+        String chatId = UUID.randomUUID().toString();
+        String message = "如何发动陷阱卡";
+        String response = happyApp.chatWithPgVectorRag(message, chatId);
+        System.out.println(response);
+        Assertions.assertNotNull(response);
+    }
 }
