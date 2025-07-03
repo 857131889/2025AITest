@@ -27,12 +27,15 @@ public class HappyAppDocumentLoader {
         try {
             Resource[] resources = resourcePatternResolver.getResources("classpath:markdown/*.md");
             for (Resource resource : resources) {
+                String fileName = resource.getFilename();
+                String status = fileName.substring(fileName.indexOf("-") + 1, fileName.lastIndexOf(".md"));
                 log.info("Loading markdow document: {}", resource.getFilename());
                 MarkdownDocumentReaderConfig config = MarkdownDocumentReaderConfig.builder()
                         .withHorizontalRuleCreateDocument(true)
                         .withIncludeCodeBlock(false)
                         .withIncludeBlockquote(false)
-                        .withAdditionalMetadata("filename", "code.md")
+                        .withAdditionalMetadata("filename", fileName)
+                        .withAdditionalMetadata("status", status)
                         .build();
                 MarkdownDocumentReader reader = new MarkdownDocumentReader(resource, config);
                 allDocuments.addAll(reader.get());

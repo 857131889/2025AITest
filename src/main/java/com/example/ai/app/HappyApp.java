@@ -105,5 +105,26 @@ public class HappyApp {
         log.info("context:{}",content);
         return content;
     }
+
+    @Resource
+    private VectorStore pgVectorVectorStore;
+
+    public String chatWithPgVectorRag(String message,String chatId) {
+        ChatResponse response = chatClient.prompt()
+                .user(message)
+                .advisors(spec -> spec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
+                        .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
+                .advisors(new MyLoggerAdvisor())
+                .advisors(new QuestionAnswerAdvisor(pgVectorVectorStore))
+                .call()
+                .chatResponse();
+        String content = null;
+        if (response != null) {
+            content = response.getResult().getOutput().getText();
+        }
+        log.info("context:{}",content);
+        return content;
+    }
+
 }
 

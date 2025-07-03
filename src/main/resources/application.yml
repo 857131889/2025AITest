@@ -19,7 +19,7 @@ spring:
     allow-bean-definition-overriding : true
 
   datasource:
-    url: jdbc:postgresql://pgm-bp11r1xvzuv4mg41yo.rwlb.rds.aliyuncs.com:5432/AITest
+    url: jdbc:postgresql://pgm-bp11r1xvzuv4mg41yo.rwlb.rds.aliyuncs.com:5432/springai
     username: Rigel
     password: ACE-+abc1
 
@@ -40,7 +40,7 @@ springdoc:
     - group: 'default'
       paths-to-match: '/**'
       packages-to-scan: com.example.ai.controller
-# knife4j???????????????
+# knife4j
 knife4j:
   enable: true
   setting:
