@@ -1,4 +1,4 @@
-package com.example.ai.rag;
+package com.example.ai.demo.rag;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.advisor.RetrievalAugmentationAdvisor;
@@ -26,6 +26,9 @@ public class HappyAppRagCustomAdvisorFactory {
                 .build();
 
         return RetrievalAugmentationAdvisor.builder().documentRetriever(documentRetriever)
+                .documentRetriever(documentRetriever)
+//                .queryAugmenter(ContextualQueryAugmenter.builder().allowEmptyContext(false).build())
+                .queryAugmenter(HappyAppContextQueryAugumenterFactory.createInstance())
                 .build();
     }
 }

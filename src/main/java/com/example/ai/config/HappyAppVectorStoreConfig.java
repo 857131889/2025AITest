@@ -1,8 +1,8 @@
 package com.example.ai.config;
 
-import com.example.ai.rag.HappyAppDocumentLoader;
-import com.example.ai.rag.MyKeywordEnricher;
-import com.example.ai.rag.MyTokenTextSpliter;
+import com.example.ai.demo.rag.HappyAppDocumentLoader;
+import com.example.ai.demo.rag.MyKeywordEnricher;
+import com.example.ai.demo.rag.MyTokenTextSpliter;
 import jakarta.annotation.Resource;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;

@@ -1,4 +1,4 @@
-package com.example.ai.rag;
+package com.example.ai.demo.rag;
 
 import jakarta.annotation.Resource;
 import org.springframework.ai.chat.model.ChatModel;

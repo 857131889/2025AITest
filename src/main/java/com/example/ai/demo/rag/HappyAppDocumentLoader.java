@@ -1,4 +1,4 @@
-package com.example.ai.rag;
+package com.example.ai.demo.rag;
 
 
 import lombok.extern.slf4j.Slf4j;

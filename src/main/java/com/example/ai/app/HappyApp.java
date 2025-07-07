@@ -2,6 +2,7 @@ package com.example.ai.app;
 
 import com.example.ai.advisor.MyLoggerAdvisor;
 import com.example.ai.chatmemory.FileBasedChatMemory;
+import com.example.ai.demo.rag.HappyAppRagCustomAdvisorFactory;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -10,7 +11,6 @@ import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.client.advisor.api.Advisor;
 import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.chat.memory.InMemoryChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.vectorstore.VectorStore;
@@ -76,6 +76,7 @@ public class HappyApp {
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
                 .advisors(new MyLoggerAdvisor())
                 .advisors(new QuestionAnswerAdvisor(happyAppVectorStore))
+                .advisors(HappyAppRagCustomAdvisorFactory.createAppCustomerAdvisor(happyAppVectorStore, "happy"))
                 .call()
                 .chatResponse();
         String content = null;
@@ -106,8 +107,8 @@ public class HappyApp {
         return content;
     }
 
-    @Resource
-    private VectorStore pgVectorVectorStore;
+//    @Resource
+//    private VectorStore pgVectorVectorStore;
 
     public String chatWithPgVectorRag(String message,String chatId) {
         ChatResponse response = chatClient.prompt()
@@ -115,7 +116,7 @@ public class HappyApp {
                 .advisors(spec -> spec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
                         .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
                 .advisors(new MyLoggerAdvisor())
-                .advisors(new QuestionAnswerAdvisor(pgVectorVectorStore))
+//                .advisors(new QuestionAnswerAdvisor(pgVectorVectorStore))
                 .call()
                 .chatResponse();
         String content = null;

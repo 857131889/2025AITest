@@ -1,4 +1,4 @@
-package com.example.ai.rag;
+package com.example.ai.demo.rag;
 
 import org.springframework.ai.document.Document;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
